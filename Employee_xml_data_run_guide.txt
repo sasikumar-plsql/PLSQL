@@ -1,0 +1,55 @@
+--Step #1
+--creating an employee map object with few fields for our testing purpose.
+create or replace TYPE employee_map AS object 
+(
+  employee_id NUMBER(6),
+  first_name  VARCHAR2(20),
+  last_name   VARCHAR2(25) 
+);
+
+--Step #2
+--create test table to load object info as xml data
+CREATE TABLE "HR"."emp_xml_data"
+  (
+     "employee_id"  NUMBER(6, 0),
+     "employee_xml" "XMLTYPE"
+  ) ;
+  
+--Step #3
+--step to verify object data populating xml info correctly for a given employee id
+SELECT Sys_xmlgen (Employee_map (employee_id, first_name, last_name)) xml_emp_info
+FROM   employees
+WHERE  employee_id = 100;
+
+--Step #4
+--creating as a program file with a sub-program procedure.
+--creating a proc Employee_xml_data
+
+--Step #5
+--Verifying through anonymous block code the expected results achieved
+SET SERVEROUTPUT ON;
+DECLARE
+  PEMP_ID NUMBER;
+BEGIN
+  PEMP_ID := 100;
+
+  EMPLOYEE_XML_DATA(
+    PEMP_ID => PEMP_ID
+  );
+--rollback; 
+END;
+
+<?xml version="1.0"?>
+<ROW>
+ <EMPLOYEE_ID>100</EMPLOYEE_ID>
+ <FIRST_NAME>Steven</FIRST_NAME>
+ <LAST_NAME>King</LAST_NAME>
+</ROW>
+
+
+
+PL/SQL procedure successfully completed.
+
+--Step #6
+--Finally, checking the xml data captured into target table correctly
+SELECT * FROM EMP_XML_DATA;

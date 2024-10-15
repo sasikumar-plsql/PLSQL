@@ -2,6 +2,7 @@ create or replace PROCEDURE Employee_xml_data (pemp_id IN NUMBER)
 AS
   xml_emp XMLTYPE;
 BEGIN
+    --sys_xmlgen is a pre-built program provided by oracle...
     SELECT Sys_xmlgen (Employee_map (employee_id, first_name, last_name))
     INTO   xml_emp
     FROM   employees

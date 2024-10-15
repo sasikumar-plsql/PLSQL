@@ -1,0 +1,19 @@
+set serveroutput on;
+DECLARE
+  P_EMPLOYEE_ID NUMBER;
+BEGIN
+  P_EMPLOYEE_ID := 100;
+
+  GET_XML_DATA(
+    P_EMPLOYEE_ID => P_EMPLOYEE_ID
+  );
+--rollback; 
+END;
+
+
+Output:
+First name : Steven
+
+
+PL/SQL procedure successfully completed.
+

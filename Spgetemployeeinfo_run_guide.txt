@@ -1,0 +1,34 @@
+set serveroutput on;
+DECLARE
+  P_DEPTID NUMBER;
+  P_OUT SYS_REFCURSOR;
+  V_OUT employees%ROWTYPE;
+BEGIN
+  P_DEPTID := 30;
+
+  SPGETEMPLOYEEINFO(
+    P_DEPTID => P_DEPTID,
+    P_OUT => P_OUT
+  );
+  
+  DBMS_OUTPUT.PUT_LINE('==> DEPT NO : '||TO_CHAR(P_DEPTID,'99'));
+  LOOP
+    FETCH P_OUT INTO V_OUT;
+    EXIT WHEN P_OUT%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(V_OUT.EMPLOYEE_ID);
+  END LOOP;
+  CLOSE P_OUT;
+
+END;
+
+Output:
+==> DEPT NO :  30
+114
+115
+116
+117
+118
+119
+
+
+PL/SQL procedure successfully completed.
